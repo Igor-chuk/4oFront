@@ -1,1 +1,121 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>GPT-4o АБСОЛЮТНО БЕСПЛАТНО</title>
+    <link rel="icon" href="gpt.ico" type="image/x-icon">
+    <script src="https://cdn.jsdelivr.net/npm/gpt4js/dist/gpt4js.min.js"></script>
+    <style>
+        body {
+            background-color: #4f4f4f;
+        }
+        .bodygrid {
+            display: grid;
+            grid-template-columns: 25% 50% 25%;
+        }
+        header {
+            background: #9e9e9e;
+            border: 2px solid #6b6b6b;
+            border-radius: 20px;
+        }
+        .logo {
+            height: 48px;
+            width: 48px;
+        }
+        .headerlinklogo {
+            text-decoration: none;
+            color: #0ef;
+            display: inline-flex;
+            align-items: center;
+        }
+        .gridhead {
+            display: grid;
+            grid-template-columns: 20% 1fr 10% 10%;
+        }
+        .chatbig {
+            height: 70vh;
+            border: 5px solid #000;
+            border-radius: 50px;
+            background: #6e6e6e;
+            display: grid;
+            grid-template-rows: 90% 10%;
+            margin: 50px;
+        }
+        .chat {
+            overflow-y: auto;
+        }
+        .chatsend {
+            margin: 0 auto;
+            align-items: center;
+        }
+        .polevvoda {
+            background: #4f4f4f;
+            border-radius: 50px;
+            height: 40px;
+            width: auto;
+            color: #fff;
+        }
+        .sendgpt {
+            background: #4f4f4f;
+            border-radius: 5px;
+            height: 40px;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="gridhead">
+            <a href="/4oFront/index.html" class="headerlinklogo">
+                <img src="gpt.ico" class="logo">
+                <h1>GPT-4o free</h1>
+            </a>
+            <div></div>
+            <a href="/4oFront/index.html" class="headerlinklogo">Главная</a>
+            <a href="/4oFront/index.html" class="headerlinklogo">Войти</a>
+        </div>
+    </header>
+    <div class="bodygrid">
+        <div></div>
+        <div class="chatbig">
+            <div class="chat" id="chat"></div>
+            <div class="chatsend">
+                <form id="gptsay" class="gptsay">
+                    <input type="text" name="question" placeholder="Введите запрос" class="polevvoda">
+                    <button type="submit" name="sendgpt" class="sendgpt">Отправить</button>
+                </form>
+            </div>
+        </div>
+        <div></div>
+    </div>
+    <script>
+        const form = document.getElementById('gptsay');
+        const div = document.getElementById('chat');
+        
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const request = form.querySelector('[name="question"]').value;
+            div.innerHTML   += "<br />Запрос: " + request;
+            
+            // Инициализация GPT4js
+            const GPT4js = window.GPT4js;
 
+            const messages = [{ role: "user", content: request }];
+            const options = {
+                provider: "Nextway",
+                model: "gpt-4o-free",
+            };
+
+            try {
+                const provider = GPT4js.createProvider(options.provider);
+                const response = await provider.chatCompletion(messages, options, (data) => {
+                });
+                div.innerHTML   += "<br />Ответ: " + response;
+            } catch (error) {
+                div.innerHTML   += "<br />Ошибка! См. подробнее в консоли!"
+                console.error("Error:", error);
+            }
+        });
+    </script>
+</body>
+</html>
